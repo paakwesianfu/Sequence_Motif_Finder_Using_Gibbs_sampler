@@ -2,7 +2,7 @@ import sys
 import random
 import numpy as np
 
-############################## Utility Functions ###############################
+############################## Defining Functions ###############################
 
 
 def read_fasta():
@@ -86,19 +86,18 @@ def consensus_sequence(motifs, alphabet):
         consensus += max(alphabet, key=lambda x: column.count(x))
     return consensus
 
-############################ Main Program ##################################
+############################ Main Sampler Program ##################################
 
 
 # Parsing command-line arguments
-if len(sys.argv) < 6:
-    print("Usage: python your_program.py a b c s < fastA_file")
+if len(sys.argv) < 5:
+    print("Usage: python gibbs_sampler_v1.py a b s rerun < fastA_file")
     sys.exit(1)
 
 a = int(sys.argv[1])
 b = int(sys.argv[2])
-c = int(sys.argv[3])
-s = sys.argv[4]
-rerun = int(sys.argv[5])
+s = sys.argv[3]
+rerun = int(sys.argv[4])
 
 # Read sequences from FASTA
 sequences = read_fasta()
@@ -108,9 +107,10 @@ sequences_with_site = insert_sequence_randomly(sequences, s)
 
 # Initialize random motifs from each sequence
 alphabet = ['A', 'C', 'G', 'T']
-motif_length = b
+motif_length = a
 current_motifs = []
 concencus_reruns = []
+
 for u in range(rerun):
     for seq in sequences_with_site:
         start = random.randint(0, len(seq)-motif_length)
@@ -120,8 +120,8 @@ for u in range(rerun):
     best_score = score_motifs(current_motifs, alphabet)
 
     # Gibbs sampling loop
-    for iteration in range(c):
-        print(f"\nIteration {iteration+1}:")
+    for iteration in range(b):
+
         for i in range(len(sequences_with_site)):
             # Remove i-th sequence
             seq = sequences_with_site[i]
@@ -149,7 +149,8 @@ for u in range(rerun):
             best_score = current_score
             best_motifs = current_motifs[:]
 
-        print("Sampled motifs:", current_motifs)
+        print(f"\nIteration {iteration+1}:"
+              f"Sampled motifs: {current_motifs}")
 
     # Output consensus
     final_consensus = consensus_sequence(best_motifs, alphabet)
