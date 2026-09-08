@@ -6,6 +6,7 @@ Motif finding is an important problem in bioinformatics, often used to detect re
 
 # How It Works
 The algorithim follows the ff. major steps 
+
 1.Input parsing: 
     .Reads DNA sequences from FASTA format using standard input
 
