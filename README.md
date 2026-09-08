@@ -33,14 +33,15 @@ python gibbs_sampler_v1.py a b s rerun < input.fasta
 
 Arguments
 Parameter       Description
-a               motif_length
 
-b               Number of Gibbs sampling iterations
+a                : motif_length
 
-s               Motif sequence (for testing)
+b               : Number of Gibbs sampling iterations
 
-rerun           Number of independent reruns (should have a value of at least 1)
+s               : Motif sequence (for testing)
 
-input.fasta     The fasta file to be used for the search 
+rerun           : Number of independent reruns (should have a value of at least 1)
+
+input.fasta     : The fasta file to be used for the search 
 
                 (note to use a correctly formatted fasta file with name starting with ">")
